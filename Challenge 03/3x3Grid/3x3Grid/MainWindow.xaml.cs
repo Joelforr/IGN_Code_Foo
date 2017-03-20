@@ -38,6 +38,7 @@ namespace _3x3Grid {
         private void Output(string value) {
             //txtOutput.Text += value + Environment.NewLine;
             FillGrid();
+            txtOutput.Text += Environment.NewLine;
             DisplayGrid();
             
 

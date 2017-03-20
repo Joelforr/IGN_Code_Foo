@@ -58,9 +58,15 @@ namespace IGN_CodeFoo2017_Database
 
                     foreach (var thumbnail in datum.thumbnails)
                     {
-                        String query = string.Format("INSERT INTO thumbnails(id, url, size, width, height) VALUES ('{0}', '{1}','{2}', '{3}', '{4}')", i, thumbnail.url, thumbnail.size, thumbnail.width, thumbnail.height);
+                        String query = "INSERT INTO thumbnails(id, url, size, width, height) VALUES (@id, @url,@size, @width, @height)";
 
                         MySqlCommand cmd = new MySqlCommand(query, dbConnection);
+
+                        cmd.Parameters.AddWithValue("@id", i);
+                        cmd.Parameters.AddWithValue("@url", thumbnail.url);
+                        cmd.Parameters.AddWithValue("@size", thumbnail.size);
+                        cmd.Parameters.AddWithValue("@width", thumbnail.width);
+                        cmd.Parameters.AddWithValue("@height", thumbnail.height);
 
                         cmd.ExecuteNonQuery();
 
@@ -82,10 +88,17 @@ namespace IGN_CodeFoo2017_Database
             {
                 foreach (var datum in database.data)
                 {
-                    String query = string.Format("INSERT INTO apidata(id, headline, state, slug, subheadline, publishdate, articletype) VALUES ('{0}', '{1}','{2}', '{3}', '{4}', '{5}', '{6}')",
-    i, datum.metadata.headline, datum.metadata.state, datum.metadata.slug, datum.metadata.subHeadline, datum.metadata.publishDate, datum.metadata.articleType);
+                    String query = "INSERT INTO apidata(id, headline, state, slug, subheadline, publishdate, articletype) VALUES (@id, @headline, @state, @slug, @subheadline, @publishdate, @articletype)";
 
                     MySqlCommand cmd = new MySqlCommand(query, dbConnection);
+
+                    cmd.Parameters.AddWithValue("@id", i);
+                    cmd.Parameters.AddWithValue("@headline", datum.metadata.headline);
+                    cmd.Parameters.AddWithValue("@state", datum.metadata.state);
+                    cmd.Parameters.AddWithValue("@slug", datum.metadata.slug);
+                    cmd.Parameters.AddWithValue("@subheadline", datum.metadata.subHeadline);
+                    cmd.Parameters.AddWithValue("@publishdate", datum.metadata.publishDate);
+                    cmd.Parameters.AddWithValue("@articletype", datum.metadata.articleType);
 
                     cmd.ExecuteNonQuery();
 
@@ -111,10 +124,11 @@ namespace IGN_CodeFoo2017_Database
                     foreach (var network in datum.metadata.networks)
                     {
 
-                        String query = string.Format("INSERT INTO networks(id,network) VALUES ('{0}', '{1}')", i, network);
-
+                        String query = "INSERT INTO networks(id,network) VALUES (@id, @network)";
+                        
                         MySqlCommand cmd = new MySqlCommand(query, dbConnection);
-
+                        cmd.Parameters.AddWithValue("@id", i);
+                        cmd.Parameters.AddWithValue("@network", network);
                         cmd.ExecuteNonQuery();
                     }
 
@@ -138,11 +152,12 @@ namespace IGN_CodeFoo2017_Database
                     foreach (var tag in datum.tags)
                     {
 
-                        String query = string.Format("INSERT INTO tags(id,tag) VALUES ('{0}', '{1}')", i, tag);
+                        String query = "INSERT INTO tags(id,tag) VALUES (@id, @tag)";
 
                         MySqlCommand cmd = new MySqlCommand(query, dbConnection);
-
-                       cmd.ExecuteNonQuery();
+                        cmd.Parameters.AddWithValue("@id", i);
+                        cmd.Parameters.AddWithValue("@tag", tag);
+                        cmd.ExecuteNonQuery();
                     }
 
                     i++;
